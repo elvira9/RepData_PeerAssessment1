@@ -1,18 +1,7 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-date: "August 13th, 2015 "
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
+August 13th, 2015   
 
-```{r setopts, echo =FALSE, message=FALSE, comment=FALSE}
-require( knitr )
-opts_chunk$set( echo = TRUE, results = "asis" )
-options( scipen = 1, digits = 3 )  # set default digits
-library( xtable )
-library("lattice")
-```
+
 
 \ 
 
@@ -22,7 +11,8 @@ This assignment makes use of data from a personal activity monitoring device. Th
 
 __Exploration of the data and data structure.__  
 
-```{r readdata, echo=T, results="asis", cache=TRUE}
+
+```r
 # download data from the source url
 fpath <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file( fpath, destfile = paste( getwd(), "/", "activity.zip", sep = "" ), method = "wget" )           
@@ -35,8 +25,20 @@ df <- read.table( "activity.csv", sep = ",", header = TRUE )
 sum <- summary( df )
 xtab <- xtable( sum )
 print( xtab, type = "html" )
-
 ```
+
+<!-- html table generated in R 3.0.2 by xtable 1.7-4 package -->
+<!-- Tue Aug 11 23:36:03 2015 -->
+<table border=1>
+<tr> <th>  </th> <th>     steps </th> <th>         date </th> <th>    interval </th>  </tr>
+  <tr> <td align="right"> 1 </td> <td> Min.   :  0   </td> <td> 2012-10-01:  288   </td> <td> Min.   :   0   </td> </tr>
+  <tr> <td align="right"> 2 </td> <td> 1st Qu.:  0   </td> <td> 2012-10-02:  288   </td> <td> 1st Qu.: 589   </td> </tr>
+  <tr> <td align="right"> 3 </td> <td> Median :  0   </td> <td> 2012-10-03:  288   </td> <td> Median :1178   </td> </tr>
+  <tr> <td align="right"> 4 </td> <td> Mean   : 37   </td> <td> 2012-10-04:  288   </td> <td> Mean   :1178   </td> </tr>
+  <tr> <td align="right"> 5 </td> <td> 3rd Qu.: 12   </td> <td> 2012-10-05:  288   </td> <td> 3rd Qu.:1766   </td> </tr>
+  <tr> <td align="right"> 6 </td> <td> Max.   :806   </td> <td> 2012-10-06:  288   </td> <td> Max.   :2355   </td> </tr>
+  <tr> <td align="right"> 7 </td> <td> NA's   :2304   </td> <td> (Other)   :15840   </td> <td>  </td> </tr>
+   </table>
 
 
 \ 
@@ -50,7 +52,8 @@ The dataset is stored in a CSV file and there are a total of 17,568 observations
 
 ### What is mean total number of steps taken per day?
 
-```{r desc, echo=TRUE}
+
+```r
 # I ignore the missing values
 dfm <- na.omit( df )
 totStep <- tapply( dfm$steps, dfm$date, sum )
@@ -59,7 +62,8 @@ totStep <- as.numeric( totStep )
 
 Histogram of total number of steps per day
 
-```{r hist-stepByDay, fig.align='center', fig.height = 6, fig.width = 6}
+
+```r
 hist( totStep, main = "Histogram of the total steps by day",
      breaks = 50,
      freq = TRUE,
@@ -67,46 +71,51 @@ hist( totStep, main = "Histogram of the total steps by day",
      xlab = "steps")
 ```
 
+<img src="./PA1_template_files/figure-html/hist-stepByDay-1.png" title="" alt="" style="display: block; margin: auto;" />
+
 The mean and median total number of steps taken per day
 
-```{r descrip, echo = FALSE }
-# mean and median
-me <- mean( totStep, na.rm = TRUE )
-med <- median( totStep,  na.rm = TRUE)
 
-```
 
-The mean of the total step per day is **`r me`** and the median is **`r med `**.
+The mean of the total step per day is **10766.189** and the median is **10765**.
 
 ### What is the average daily activity pattern?
 
 Below therea are a time series plot where we can see the average number of steps taken, averaged across all days.
 
-```{r timeserie1, fig.align='center',fig.height= 6, fig.width = 9}
+
+```r
 avdAct <- tapply( dfm$steps, dfm$interval, mean )
 plot( avdAct, type = "l", xlab = "interval", ylab = "Average of steps", col ="purple" )
 ```
 
-```{r max}
+<img src="./PA1_template_files/figure-html/timeserie1-1.png" title="" alt="" style="display: block; margin: auto;" />
+
+
+```r
 maxInterv <- dimnames( avdAct )[[1]] [ rev( order( avdAct ) )[1] ]
 maxi1 <- max( avdAct )
 ```
 
-The 5 minute interval that on average across all the days in the dataset  contains the maximum number of steps is the **`r maxInterv`**, the maximun is `r maxi1`.
+The 5 minute interval that on average across all the days in the dataset  contains the maximum number of steps is the **835**, the maximun is 206.17.
 
 ### Imputing missing values
 
 The total number of missing values in the dataset is:
 
-```{r NAcounts}
+
+```r
 nna <- as.numeric( sum( is.na( df$steps ) ) )
 nna
 ```
 
+[1] 2304
+
 
 We will fill all of the missing values in the dataset with the mean for that 5-minute interval. And create a new dataset with the missing data filled in.   
 
-```{r fillingNAs}
+
+```r
 dft <- df  # with NAs
  for (i in 1:nrow(df)){     # We fill the dataframe with the mean and we create 'dft' 
      if ( is.na( df$steps[i] ) ){
@@ -119,16 +128,18 @@ dft <- df  # with NAs
 # dft is the new dataset with missing filled in
 ```
 
-The number of missing data is `r nna`
+The number of missing data is 2304
 
-```{r  sum2}
+
+```r
 sumt <- tapply( dft$steps, dft$date, sum )
 sumt <- as.numeric( sumt )
 ```
 
 Histogram of total number of steps per day of the dataset without missig data
 
-```{r hist-totalStepDay, fig.align='center',fig.height = 6, fig.width = 6 }
+
+```r
 hist( sumt, main = "Histogram of the total steps by day \n(no missig data)",
      breaks = 50,
      freq = TRUE,
@@ -136,22 +147,20 @@ hist( sumt, main = "Histogram of the total steps by day \n(no missig data)",
      xlab = "steps" )
 ```
 
-
-```{r descrip total, echo = FALSE}
-# mean and median
-met <-mean( sumt, na.rm = TRUE )
-medt <- median(sumt,  na.rm = TRUE )
-
-```
+<img src="./PA1_template_files/figure-html/hist-totalStepDay-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 
-After filling in the missing data with the mean of the interval, the mean of the total step per day is **`r met`** and the median is **`r medt `**.   So we found very small diferences, oly the median change a bit.
+
+
+
+After filling in the missing data with the mean of the interval, the mean of the total step per day is **10766.189** and the median is **10766.189**.   So we found very small diferences, oly the median change a bit.
 
 ### Are there differences in activity patterns between weekdays and weekends?
 
 We create a new factor variable with two levels – "weekday" and "weekend".
 
-```{r weekends}
+
+```r
 # change factor to dates and set if they are weekdays or weekends
 dd <- as.character( dft$date )
 dd <- as.Date( dd, "%Y-%m-%d" )
@@ -165,7 +174,8 @@ dft <- data.frame( dft, dw = factor( dw ) )
 
 There is a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days:
 
-```{r activ-wday&wend, fig.align='center', fig.height = 4, fig.width = 7 }
+
+```r
 dfwdays <- dft[ dft$dw == "weekday", ] 
 mwdays <- tapply( dfwdays$steps, dfwdays$interval, mean )
 plot( mwdays, type = "l",
@@ -196,11 +206,14 @@ legend( "topleft", inset=.05,
        col = c( "blue","red" ),
        horiz = FALSE )
 ```
+
+<img src="./PA1_template_files/figure-html/activ-wday&wend-1.png" title="" alt="" style="display: block; margin: auto;" />
 We observe that the activity on weekends tends to be more spread out over the day compared to the weekdays.
 
 It seems that **on weekend the activity (steps) are extended over the intervals (day time) that on weekdays**. It could be because of the diferent day routines.
 
-```{r activ-wday&wend2, fig.align='center', fig.height=5, fig.width=8}
+
+```r
 par( mfrow = c( 2,1 ) )
 
 plot( mwdays, type = "l",
@@ -220,13 +233,37 @@ plot(mwend,
      col = "red",
      xlim = c( 0, 300 ),
      lwd = 1.5 )
-
 ```
+
+<img src="./PA1_template_files/figure-html/activ-wday&wend2-1.png" title="" alt="" style="display: block; margin: auto;" />
 
 Finally, there is the infomation about my session.
-```{r}
+
+```r
 sessionInfo()
 ```
+
+R version 3.0.2 (2013-09-25)
+Platform: i686-pc-linux-gnu (32-bit)
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] lattice_0.20-29 xtable_1.7-4    knitr_1.8      
+
+loaded via a namespace (and not attached):
+ [1] codetools_0.2-8 digest_0.6.4    evaluate_0.5.5  formatR_1.0    
+ [5] grid_3.0.2      htmltools_0.2.6 rmarkdown_0.3.3 stringr_0.6.2  
+ [9] tools_3.0.2     yaml_2.1.13    
 
 
 
