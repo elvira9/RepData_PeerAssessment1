@@ -2,4 +2,4 @@ RepData_PeerAssessment1
 =======================
 
 Reproducible Research  
-amaurandi@um.es. June,9th, 2014
+mariaelvira.ferre@um.es. August 12th, 2015

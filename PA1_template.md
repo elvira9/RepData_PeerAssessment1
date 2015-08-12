@@ -1,5 +1,6 @@
 # Reproducible Research: Peer Assessment 1
-August 13th, 2015   
+María Elvira Ferre Jaén (mariaelvira.ferre@um.es)  
+August 12th, 2015   
 
 
 
@@ -28,7 +29,7 @@ print( xtab, type = "html" )
 ```
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-4 package -->
-<!-- Tue Aug 11 23:36:03 2015 -->
+<!-- Wed Aug 12 20:33:02 2015 -->
 <table border=1>
 <tr> <th>  </th> <th>     steps </th> <th>         date </th> <th>    interval </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> Min.   :  0   </td> <td> 2012-10-01:  288   </td> <td> Min.   :   0   </td> </tr>
