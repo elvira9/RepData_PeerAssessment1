@@ -1,7 +1,6 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
-author: "María Elvira Ferre Jaén (mariaelvira.ferre@um.es)"
-date: "August 12th, 2015 "
+date: "August 13th, 2015 "
 output: 
   html_document:
     keep_md: true

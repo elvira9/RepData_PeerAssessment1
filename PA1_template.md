@@ -1,6 +1,10 @@
-# Reproducible Research: Peer Assessment 1
-María Elvira Ferre Jaén (mariaelvira.ferre@um.es)  
-August 12th, 2015   
+---
+title: "Reproducible Research: Peer Assessment 1"
+date: "August 13th, 2015 "
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 
@@ -29,7 +33,7 @@ print( xtab, type = "html" )
 ```
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-4 package -->
-<!-- Wed Aug 12 20:33:02 2015 -->
+<!-- Mon Aug 24 14:46:13 2015 -->
 <table border=1>
 <tr> <th>  </th> <th>     steps </th> <th>         date </th> <th>    interval </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> Min.   :  0   </td> <td> 2012-10-01:  288   </td> <td> Min.   :   0   </td> </tr>
@@ -72,7 +76,7 @@ hist( totStep, main = "Histogram of the total steps by day",
      xlab = "steps")
 ```
 
-<img src="./PA1_template_files/figure-html/hist-stepByDay-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/hist-stepByDay-1.png" title="plot of chunk hist-stepByDay" alt="plot of chunk hist-stepByDay" style="display: block; margin: auto;" />
 
 The mean and median total number of steps taken per day
 
@@ -90,7 +94,7 @@ avdAct <- tapply( dfm$steps, dfm$interval, mean )
 plot( avdAct, type = "l", xlab = "interval", ylab = "Average of steps", col ="purple" )
 ```
 
-<img src="./PA1_template_files/figure-html/timeserie1-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/timeserie1-1.png" title="plot of chunk timeserie1" alt="plot of chunk timeserie1" style="display: block; margin: auto;" />
 
 
 ```r
@@ -148,7 +152,7 @@ hist( sumt, main = "Histogram of the total steps by day \n(no missig data)",
      xlab = "steps" )
 ```
 
-<img src="./PA1_template_files/figure-html/hist-totalStepDay-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/hist-totalStepDay-1.png" title="plot of chunk hist-totalStepDay" alt="plot of chunk hist-totalStepDay" style="display: block; margin: auto;" />
 
 
 
@@ -208,7 +212,7 @@ legend( "topleft", inset=.05,
        horiz = FALSE )
 ```
 
-<img src="./PA1_template_files/figure-html/activ-wday&wend-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/activ-wday&wend-1.png" title="plot of chunk activ-wday&wend" alt="plot of chunk activ-wday&wend" style="display: block; margin: auto;" />
 We observe that the activity on weekends tends to be more spread out over the day compared to the weekdays.
 
 It seems that **on weekend the activity (steps) are extended over the intervals (day time) that on weekdays**. It could be because of the diferent day routines.
@@ -236,7 +240,7 @@ plot(mwend,
      lwd = 1.5 )
 ```
 
-<img src="./PA1_template_files/figure-html/activ-wday&wend2-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="figure/activ-wday&wend2-1.png" title="plot of chunk activ-wday&wend2" alt="plot of chunk activ-wday&wend2" style="display: block; margin: auto;" />
 
 Finally, there is the infomation about my session.
 
@@ -259,12 +263,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] lattice_0.20-29 xtable_1.7-4    knitr_1.8      
+[1] lattice_0.20-29 xtable_1.7-4    knitr_1.11      markdown_0.7.7 
 
 loaded via a namespace (and not attached):
- [1] codetools_0.2-8 digest_0.6.4    evaluate_0.5.5  formatR_1.0    
- [5] grid_3.0.2      htmltools_0.2.6 rmarkdown_0.3.3 stringr_0.6.2  
- [9] tools_3.0.2     yaml_2.1.13    
+ [1] codetools_0.2-8 digest_0.6.4    evaluate_0.7.2  formatR_1.0    
+ [5] grid_3.0.2      htmltools_0.2.6 mime_0.3        rmarkdown_0.7  
+ [9] stringr_0.6.2   tools_3.0.2     yaml_2.1.13    
 
 
 
